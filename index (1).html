@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sivanaga Jyothi Yeduruuru — Data Science & AI/ML Developer</title>
+<meta name="description" content="Portfolio of Sivanaga Jyothi Yeduruuru — Data Science student and AI Engineering Intern. Python, Machine Learning, Django, Computer Vision and IoT projects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a0d13;
+    --bg-alt: #0e121a;
+    --surface: #131824;
+    --surface-hi: #1a2130;
+    --border: #232b3b;
+    --text: #e7e9ee;
+    --muted: #8791a6;
+    --muted-dim: #5a6478;
+    --gold: #ffd43b;
+    --gold-dim: #8a7220;
+    --cyan: #4b8bbe;
+    --cyan-dim: #2c5680;
+    --radius: 10px;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  ::selection{ background: var(--gold); color: #0a0d13; }
+
+  a{ color:inherit; text-decoration:none; }
+
+  .mono{ font-family: 'IBM Plex Mono', monospace; }
+  .display{ font-family: 'Space Grotesk', sans-serif; }
+
+  /* Background grid + glow */
+  .bg-grid{
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 75%);
+  }
+  .bg-glow{
+    position: fixed;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255,212,59,0.09) 0%, rgba(75,139,190,0.09) 45%, transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    .fade-up{
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .fade-up.in{ opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(10,13,19,0.72);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.5px;
+  }
+  .logo span{ color: var(--gold); }
+  .nav-links{
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .nav-links a{ transition: color .2s ease; position: relative; }
+  .nav-links a:hover{ color: var(--text); }
+  .nav-cta{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    padding: 9px 16px;
+    border: 1px solid var(--gold-dim);
+    border-radius: 6px;
+    color: var(--gold);
+    white-space: nowrap;
+    transition: all .2s ease;
+  }
+  .nav-cta:hover{ background: var(--gold); color: #0a0d13; border-color: var(--gold); }
+  .nav-toggle{ display:none; background:none; border:none; color:var(--text); font-size:22px; cursor:pointer; }
+
+  @media (max-width: 760px){
+    .nav-links{
+      position: fixed;
+      top: 61px; left: 0; right: 0;
+      background: var(--bg-alt);
+      border-bottom: 1px solid var(--border);
+      flex-direction: column;
+      gap: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .3s ease;
+    }
+    .nav-links.open{ max-height: 300px; }
+    .nav-links li{ width: 100%; }
+    .nav-links a{ display:block; padding: 16px 24px; border-bottom: 1px solid var(--border); }
+    .nav-toggle{ display:block; }
+    .nav-cta{ display:none; }
+    .hero-ctas .btn[download]{ order: 3; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 168px 24px 96px;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .eyebrow{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--cyan);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+    letter-spacing: 0.4px;
+  }
+  .eyebrow::before{
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 0 4px rgba(75,139,190,0.18);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ box-shadow: 0 0 0 4px rgba(75,139,190,0.18); }
+    50%{ box-shadow: 0 0 0 8px rgba(75,139,190,0.06); }
+  }
+  h1.hero-name{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(38px, 5.2vw, 60px);
+    font-weight: 700;
+    line-height: 1.06;
+    letter-spacing: -1px;
+    margin-bottom: 18px;
+  }
+  h1.hero-name .accent{ color: var(--gold); }
+  .hero-desc{
+    color: var(--muted);
+    font-size: 17px;
+    max-width: 480px;
+    margin-bottom: 34px;
+  }
+  .hero-desc b{ color: var(--text); font-weight: 500; }
+  .hero-ctas{ display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    padding: 13px 22px;
+    border-radius: 7px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all .2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-primary{ background: var(--gold); color: #0a0d13; font-weight: 600; }
+  .btn-primary:hover{ background: #f3b459; transform: translateY(-1px); }
+  .btn-secondary{ border-color: var(--border); color: var(--text); }
+  .btn-secondary:hover{ border-color: var(--muted-dim); background: var(--surface); }
+
+  /* Terminal signature element */
+  .terminal{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6);
+  }
+  .terminal-bar{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: var(--surface-hi);
+    border-bottom: 1px solid var(--border);
+  }
+  .dot{ width: 10px; height: 10px; border-radius: 50%; }
+  .dot.red{ background: #ff5f56; }
+  .dot.yellow{ background: #ffbd2e; }
+  .dot.green{ background: #27c93f; }
+  .terminal-title{
+    margin-left: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .terminal-body{
+    padding: 22px 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13.5px;
+    min-height: 230px;
+  }
+  .terminal-body .line{ margin-bottom: 6px; white-space: pre-wrap; word-break: break-word; }
+  .prompt{ color: var(--cyan); }
+  .kw{ color: #c792ea; }
+  .str{ color: var(--gold); }
+  .comment{ color: var(--muted-dim); }
+  .fn { color: #82aaff; }
+  #typed-cursor{
+    display: inline-block;
+    width: 8px; height: 15px;
+    background: var(--cyan);
+    animation: blink 1s step-end infinite;
+    vertical-align: text-bottom;
+    margin-left: 2px;
+  }
+  @keyframes blink{ 50%{ opacity: 0; } }
+
+  /* ---------- SECTION SHARED ---------- */
+  section{ max-width: 1120px; margin: 0 auto; padding: 90px 24px; }
+  .section-head{ margin-bottom: 44px; }
+  .section-num{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--gold);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+  h2{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(26px, 3.4vw, 34px);
+    font-weight: 600;
+    letter-spacing: -0.5px;
+  }
+  .section-sub{ color: var(--muted); margin-top: 10px; max-width: 560px; }
+
+  hr.divider{
+    border: none;
+    border-top: 1px solid var(--border);
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .about-text p{ color: var(--muted); margin-bottom: 16px; font-size: 15.5px; }
+  .about-text b{ color: var(--text); font-weight: 500; }
+  .stat-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .stat-card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+  .stat-num{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .stat-label{ font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  @media (max-width: 760px){
+    .about-grid, .hero{ grid-template-columns: 1fr; }
+    .hero{ padding-top: 120px; }
+  }
+
+  /* ---------- EXPERIENCE ---------- */
+  .exp-list{ display: flex; flex-direction: column; gap: 22px; }
+  .exp-item{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--cyan-dim);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    transition: border-color .2s ease;
+  }
+  .exp-item:hover{ border-left-color: var(--cyan); }
+  .exp-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .exp-top h3{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .exp-date{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    color: var(--gold);
+  }
+  .exp-company{
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .exp-dot{ color: var(--muted-dim); margin: 0 4px; }
+  .exp-points{ list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .exp-points li{
+    font-size: 14px;
+    color: var(--muted);
+    padding-left: 18px;
+    position: relative;
+  }
+  .exp-points li::before{
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--cyan);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .skill-card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    transition: border-color .2s ease, transform .2s ease;
+  }
+  .skill-card:hover{ border-color: var(--cyan-dim); transform: translateY(-3px); }
+  .skill-card .icon{
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--cyan);
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+  .skill-card h3{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+  .tag-list{ display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    padding: 4px 9px;
+    border-radius: 5px;
+    background: var(--surface-hi);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  @media (max-width: 900px){ .skills-grid{ grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px){ .skills-grid{ grid-template-columns: 1fr; } }
+
+  /* ---------- PROJECTS ---------- */
+  .filter-bar{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  .filter-btn{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    padding: 9px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+  .filter-btn:hover{ border-color: var(--cyan-dim); color: var(--text); }
+  .filter-btn.active{ background: var(--gold); border-color: var(--gold); color: #0a0d13; font-weight: 600; }
+
+  .projects-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .project-card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color .25s ease, transform .25s ease, opacity .25s ease;
+  }
+  .project-card.hidden{
+    display: none;
+  }
+  .project-card:hover{ border-color: var(--gold-dim); transform: translateY(-4px); }
+  .project-clone{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    padding: 10px 18px;
+    background: var(--surface-hi);
+    color: var(--muted-dim);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .project-clone .prompt{ color: var(--cyan); }
+  .project-body{ padding: 22px 20px 24px; flex: 1; display: flex; flex-direction: column; }
+  .project-tag{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+  .project-body h3{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 19px;
+    margin-bottom: 10px;
+  }
+  .project-body p{ color: var(--muted); font-size: 14.5px; margin-bottom: 16px; flex: 1; }
+  .project-tech{ display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+  .project-links{ display: flex; gap: 12px; }
+  .project-links a{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: all .2s ease;
+  }
+  .project-links a:hover{ border-color: var(--cyan-dim); color: var(--cyan); }
+  @media (max-width: 760px){ .projects-grid{ grid-template-columns: 1fr; } }
+
+  /* ---------- EDUCATION ---------- */
+  .edu-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .edu-card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+  }
+  @media (max-width: 760px){ .edu-grid{ grid-template-columns: 1fr; } }
+
+  /* ---------- CONTACT ---------- */
+  .contact-box{
+    background: linear-gradient(160deg, var(--surface), var(--bg-alt));
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 56px 44px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-box::before{
+    content:'';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 240px; height: 240px;
+    background: radial-gradient(circle, rgba(255,212,59,0.12), transparent 70%);
+  }
+  .contact-box h2{ margin-bottom: 14px; }
+  .contact-box p{ color: var(--muted); max-width: 480px; margin: 0 auto 32px; }
+  .contact-methods{
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+  .contact-pill{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13.5px;
+    background: var(--surface-hi);
+    border: 1px solid var(--border);
+    padding: 11px 18px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all .2s ease;
+  }
+  .contact-pill:hover{ border-color: var(--cyan-dim); color: var(--cyan); }
+
+  footer{
+    text-align: center;
+    padding: 40px 24px 50px;
+    color: var(--muted-dim);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+  }
+  footer a{ color: var(--muted); }
+  footer a:hover{ color: var(--gold); }
+
+  .edit-note{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted-dim);
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<header>
+  <nav>
+    <div class="logo">&lt;<span>SJY</span>/&gt;</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="resume.pdf" class="nav-cta nav-resume" download>Resume ↓</a>
+    <a href="#contact" class="nav-cta">Hire Me</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+  </nav>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="eyebrow">AVAILABLE FOR FREELANCE PROJECTS</div>
+    <h1 class="hero-name">Sivanaga Jyothi Yeduruuru<br><span class="accent">Data Science & AI/ML Developer</span></h1>
+    <p class="hero-desc">Final-year Data Science student and AI Engineering Intern who builds <b>machine learning systems</b>, <b>computer vision applications</b>, and <b>IoT-connected hardware</b> — from Django backends to real-time devices that act on live data.</p>
+    <div class="hero-ctas">
+      <a href="#work" class="btn btn-primary">View Projects →</a>
+      <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+      <a href="resume.pdf" class="btn btn-secondary" download>↓ Download Resume</a>
+    </div>
+  </div>
+
+  <div class="terminal">
+    <div class="terminal-bar">
+      <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      <span class="terminal-title">profile.py</span>
+    </div>
+    <div class="terminal-body" id="terminalBody"></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-head fade-up">
+    <div class="section-num">01 / About</div>
+    <h2>I turn data and code into things that run in the real world.</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text fade-up">
+      <p>I'm a final-year <b>Data Science</b> student with a solid foundation in Python, SQL, and Java, and hands-on experience across data analysis, visualization, and applied machine learning.</p>
+      <p>I'm currently an <b>AI Engineering Intern</b> at CTRLS-DeepForrest.ai, working on Harmony — an AI-powered dossier generation platform — where I fix frontend and backend issues, and work with FastAPI, Pydantic, and LLM prompt engineering. Earlier, I completed a Data Science internship at Infosys Springboard building Power BI dashboards for sales analysis.</p>
+      <p>Outside of internships, I build end-to-end projects: <b>Django ML web apps</b>, <b>CNN-based computer vision systems</b>, and <b>IoT devices</b> that combine Python, Arduino, and live sensor data to automate physical hardware. Open to <b>freelance and contract work</b> in machine learning, data analysis, and Python development.</p>
+    </div>
+    <div class="stat-grid fade-up">
+      <div class="stat-card"><div class="stat-num">8.9</div><div class="stat-label">CGPA / 10</div></div>
+      <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Internships completed</div></div>
+      <div class="stat-card"><div class="stat-num">1st</div><div class="stat-label">Place, Project Expo (VNITSW)</div></div>
+      <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Projects shipped</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-head fade-up">
+    <div class="section-num">02 / Experience</div>
+    <h2>Internships</h2>
+    <p class="section-sub">Real teams, real codebases.</p>
+  </div>
+  <div class="exp-list">
+    <div class="exp-item fade-up">
+      <div class="exp-top">
+        <h3>AI Engineering Intern</h3>
+        <span class="exp-date">Jan 2026 – Present</span>
+      </div>
+      <div class="exp-company">CTRLS–DeepForrest.ai <span class="exp-dot">·</span> Project: Harmony (AI-powered Dossier Generation Platform)</div>
+      <ul class="exp-points">
+        <li>Worked on Harmony, an AI-based application for managing, generating, and processing regulatory dossier and DMF documents.</li>
+        <li>Fixed frontend and backend issues across pagination, validations, UI components, and API responses.</li>
+        <li>Worked with FastAPI, Pydantic, LLM concepts, and prompt engineering to improve functionality across multiple modules.</li>
+      </ul>
+    </div>
+    <div class="exp-item fade-up">
+      <div class="exp-top">
+        <h3>Data Science Intern</h3>
+        <span class="exp-date">Oct 2024 – Jan 2025</span>
+      </div>
+      <div class="exp-company">Infosys Springboard <span class="exp-dot">·</span> Project: Sales Performance Analysis using Power BI</div>
+      <ul class="exp-points">
+        <li>Cleaned and transformed sales data in Power BI and built interactive dashboards across regions, products, and time periods.</li>
+        <li>Applied DAX calculations to generate KPIs that sharpened business insight for stakeholders.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-head fade-up">
+    <div class="section-num">03 / Skills</div>
+    <h2>Toolkit</h2>
+    <p class="section-sub">The languages, frameworks, and tools behind the projects below.</p>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card fade-up">
+      <div class="icon">// languages & web</div>
+      <h3>Programming</h3>
+      <div class="tag-list">
+        <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Java</span><span class="tag">C</span><span class="tag">HTML/CSS</span><span class="tag">JavaScript</span>
+      </div>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="icon">// ml</div>
+      <h3>Machine Learning</h3>
+      <div class="tag-list">
+        <span class="tag">Linear Regression</span><span class="tag">Logistic Regression</span><span class="tag">Random Forest</span><span class="tag">Model Evaluation</span><span class="tag">Prompt Engineering</span>
+      </div>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="icon">// backend</div>
+      <h3>Frameworks</h3>
+      <div class="tag-list">
+        <span class="tag">Django</span><span class="tag">FastAPI</span><span class="tag">Redis</span><span class="tag">Pydantic</span><span class="tag">REST APIs</span>
+      </div>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="icon">// data</div>
+      <h3>Data & Analytics</h3>
+      <div class="tag-list">
+        <span class="tag">Pandas</span><span class="tag">Power BI</span><span class="tag">Tableau</span><span class="tag">Excel</span><span class="tag">MS SQL Server</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROJECTS -->
+<section id="work">
+  <div class="section-head fade-up">
+    <div class="section-num">04 / Work</div>
+    <h2>Selected Projects</h2>
+    <p class="section-sub">A mix of AI/ML, full-stack, and hardware-integrated builds.</p>
+  </div>
+
+  <div class="filter-bar fade-up">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="ai-web">AI &amp; Web</button>
+    <button class="filter-btn" data-filter="ml">Machine Learning</button>
+    <button class="filter-btn" data-filter="cv">Computer Vision</button>
+    <button class="filter-btn" data-filter="iot">IoT &amp; Hardware</button>
+  </div>
+
+  <div class="projects-grid">
+
+    <div class="project-card fade-up" data-category="iot">
+      <div class="project-clone"><span class="prompt">$</span> git clone DomeControl.git</div>
+      <div class="project-body">
+        <div class="project-tag">IOT · PYTHON + ARDUINO · 🏆 1ST PLACE, PROJECT EXPO</div>
+        <h3>Automated Dome Control System</h3>
+        <p>Built to protect market yard produce from adverse weather. Automates dome operations using real-time rainfall and humidity data from a weather API, cutting down manual intervention. Won 1st place among 20+ teams at Project Expo, VNITSW.</p>
+        <div class="project-tech">
+          <span class="tag">Python</span><span class="tag">Tkinter</span><span class="tag">OpenWeatherMap API</span><span class="tag">IoT</span><span class="tag">Arduino</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/jyothi4218/DomeControl" target="_blank" rel="noopener">↗ GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card fade-up" data-category="cv iot">
+      <div class="project-clone"><span class="prompt">$</span> git clone FaceMaskDetection.git</div>
+      <div class="project-body">
+        <div class="project-tag">COMPUTER VISION · DEEP LEARNING</div>
+        <h3>Door Lock Control Using Face Mask Detection</h3>
+        <p>Monitors face mask compliance in real time. A CNN-based system using MobileNetV2 classifies masked vs. unmasked faces from live video, enabling automated access control through IoT integration.</p>
+        <div class="project-tech">
+          <span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">MobileNetV2</span><span class="tag">TensorFlow</span><span class="tag">IoT</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/jyothi4218/FaceMaskDetection" target="_blank" rel="noopener">↗ GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card fade-up" data-category="ml ai-web">
+      <div class="project-clone"><span class="prompt">$</span> git clone Customer_Churn.git</div>
+      <div class="project-body">
+        <div class="project-tag">MACHINE LEARNING · WEB APP</div>
+        <h3>Newspaper Customer Churn Prediction</h3>
+        <p>A Django web application that integrates News API to display real-time news and manages user data through an admin dashboard. A Logistic Regression model predicts customer churn, helping admins identify and retain at-risk subscribers.</p>
+        <div class="project-tech">
+          <span class="tag">Python</span><span class="tag">Django</span><span class="tag">News API</span><span class="tag">Logistic Regression</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/jyothi4218/Customer_Churn" target="_blank" rel="noopener">↗ GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card fade-up" data-category="ai-web">
+      <div class="project-clone"><span class="prompt">$</span> git clone travel-planner-ai.git</div>
+      <div class="project-body">
+        <div class="project-tag">AI · FULL-STACK</div>
+        <h3>AI Travel Planner</h3>
+        <p>An AI-powered trip planning platform that turns a natural-language prompt into a full itinerary — flights, hotels, and day-by-day plans — with authenticated accounts and shareable community trip plans.</p>
+        <div class="project-tech">
+          <span class="tag">Next.js</span><span class="tag">TypeScript</span><span class="tag">OpenAI API</span><span class="tag">Convex</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/jyothi4218/travel-planner-ai" target="_blank" rel="noopener">↗ GitHub</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-head fade-up">
+    <div class="section-num">05 / Education</div>
+    <h2>Education & Achievements</h2>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card fade-up">
+      <div class="exp-top">
+        <h3>B.Tech, Data Science</h3>
+        <span class="exp-date">Oct 2022 – May 2026</span>
+      </div>
+      <div class="exp-company">Vignan's Nirula Institute of Technology and Sciences for Women <span class="exp-dot">·</span> CGPA: 8.9/10</div>
+    </div>
+    <div class="edu-card fade-up">
+      <ul class="exp-points">
+        <li>🏆 1st place among 20+ teams for Automated Dome Control System at Project Expo, VNITSW.</li>
+        <li>Active NSS volunteer — community service, rural development, and social awareness programs.</li>
+        <li>Certification: Cambridge Preliminary English Test (PET) — Grade B.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-num" style="text-align:center; margin-bottom:8px;">06 / Contact</div>
+  <div class="contact-box fade-up">
+    <h2>Let's build something.</h2>
+    <p>Open to freelance and contract work in machine learning, data analysis, and Python development. Reach out and let's talk about your project.</p>
+    <div class="contact-methods">
+      <a class="contact-pill" href="tel:+918247883411">📞 +91 82478 83411</a>
+      <a class="contact-pill" href="mailto:yedururusivanagajyothi@gmail.com">✉ yedururusivanagajyothi@gmail.com</a>
+      <a class="contact-pill" href="https://linkedin.com/in/yedururusivanagajyothi/" target="_blank" rel="noopener">in LinkedIn</a>
+      <a class="contact-pill" href="https://github.com/jyothi4218" target="_blank" rel="noopener">↗ GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Sivanaga Jyothi Yeduruuru. Built with Python-shaped ambition. <span id="year"></span>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // Project category filter
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const projectCards = document.querySelectorAll('.project-card');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      projectCards.forEach(card => {
+        const cats = (card.dataset.category || '').split(' ');
+        const show = filter === 'all' || cats.includes(filter);
+        card.classList.toggle('hidden', !show);
+      });
+    });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Terminal typing animation
+  const lines = [
+    { html: '<span class="kw">import</span> jyothi <span class="kw">as</span> dev', pause: 300 },
+    { html: '', pause: 100 },
+    { html: '<span class="prompt">&gt;&gt;&gt;</span> dev.<span class="fn">role</span>()', pause: 250 },
+    { html: '<span class="str">"Data Science & AI/ML Developer"</span>', pause: 400 },
+    { html: '', pause: 100 },
+    { html: '<span class="prompt">&gt;&gt;&gt;</span> dev.<span class="fn">currently</span>()', pause: 250 },
+    { html: '<span class="str">"AI Engineering Intern @ DeepForrest.ai"</span>', pause: 400 },
+    { html: '', pause: 100 },
+    { html: '<span class="prompt">&gt;&gt;&gt;</span> dev.<span class="fn">focus</span>()', pause: 250 },
+    { html: '<span class="str">["Machine Learning", "Computer Vision",</span>', pause: 80 },
+    { html: '<span class="str"> "Django", "IoT Systems"]</span>', pause: 400 },
+    { html: '', pause: 100 },
+    { html: '<span class="prompt">&gt;&gt;&gt;</span> dev.<span class="fn">status</span>()', pause: 250 },
+    { html: '<span class="str">"open to freelance work"</span> <span class="comment"># let\'s talk</span>', pause: 400 },
+  ];
+
+  const body = document.getElementById('terminalBody');
+  let lineIndex = 0;
+
+  function typeLine(){
+    if(lineIndex >= lines.length){
+      const cursor = document.createElement('span');
+      cursor.id = 'typed-cursor';
+      body.appendChild(cursor);
+      return;
+    }
+    const div = document.createElement('div');
+    div.className = 'line';
+    body.appendChild(div);
+    const target = lines[lineIndex];
+    const temp = document.createElement('span');
+    temp.innerHTML = target.html;
+    const fullText = temp.textContent;
+    let charIndex = 0;
+
+    if(fullText.length === 0){
+      lineIndex++;
+      setTimeout(typeLine, 120);
+      return;
+    }
+
+    function typeChar(){
+      if(charIndex <= fullText.length){
+        // reveal using innerHTML progressively is tricky with tags, so fade in whole line quickly per-word
+        div.innerHTML = target.html;
+        div.style.opacity = Math.min(1, charIndex / fullText.length);
+        charIndex += Math.ceil(fullText.length / 14);
+        requestAnimationFrame(typeChar);
+      } else {
+        div.style.opacity = 1;
+        lineIndex++;
+        setTimeout(typeLine, target.pause);
+      }
+    }
+    typeChar();
+  }
+
+  setTimeout(typeLine, 500);
+</script>
+
+</body>
+</html>
